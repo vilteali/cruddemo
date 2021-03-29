@@ -1,66 +1,59 @@
 package com.ali.cruddemo.service;
 
 import java.util.List;
-
-import javax.transaction.Transactional;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import com.ali.cruddemo.dao.EmployeeDAO;
+import com.ali.cruddemo.dao.EmployeeRepository;
 import com.ali.cruddemo.entity.Employee;
 
 @Service
 public class EmployeeServiceImp implements EmployeeService {
-
-	private EmployeeDAO employeeDAO;
+	
+	// remove @transactional from methods since JpaRepository provides this functionality
+	private EmployeeRepository employeeRepository;
 	
 	@Autowired
-	public EmployeeServiceImp(@Qualifier("employeeDAOJpaImp") EmployeeDAO employeeDAO) {
-		this.employeeDAO = employeeDAO;
+	public EmployeeServiceImp(EmployeeRepository employeeRepository) {
+		this.employeeRepository = employeeRepository;
 	}
 	
 	@Override
-	@Transactional
 	public List<Employee> findAll() {
-		return employeeDAO.findAll();
+		return employeeRepository.findAll();
 	}
 
 	@Override
-	@Transactional
 	public Employee findById(Integer id) {
 		
-		Employee employee = employeeDAO.findById(id);
+		Optional<Employee> result = employeeRepository.findById(id);
+		Employee employee = null;
 		
-		if(employee == null) 
-			throw new RuntimeException("Employee id: "+id+" not found");
+		if(result.isPresent()) {
+			employee = result.get();
+		}else {
+			throw new RuntimeException("Didn't find employee id: "+id);
+		}
 		
 		return employee;
 	}
 
 	@Override
-	@Transactional
 	public void save(Employee employee) {
 
 		Integer employeeId = employee.getId();
 		
 		if(employeeId == null || employeeId != null) 
-			employeeDAO.save(employee);
+			employeeRepository.save(employee);
 		
 	}
 
 	@Override
-	@Transactional
 	public void deleteById(Integer id) {
 		
-		Employee employee = employeeDAO.findById(id);
-		
-		if(employee == null) {
-			throw new RuntimeException("Employee id: "+id+" not found");
-		}
-		
-		employeeDAO.deleteById(id);
+		employeeRepository.deleteById(id);
 	}
 
 }

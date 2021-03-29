@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ali.cruddemo.dao.EmployeeDAO;
 import com.ali.cruddemo.entity.Employee;
 import com.ali.cruddemo.service.EmployeeService;
 
