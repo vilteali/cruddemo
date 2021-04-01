@@ -1,4 +1,4 @@
-package com.ali.cruddemo.rest;
+/*package com.ali.cruddemo.rest;
 
 import java.util.List;
 
@@ -64,4 +64,4 @@ public class EmployeeRestController {
 		return "Deleted employee id: "+id;
 	}
 	
-}
+}	*/

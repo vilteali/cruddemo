@@ -1,4 +1,4 @@
-package com.ali.cruddemo.service;
+/*package com.ali.cruddemo.service;
 
 import java.util.List;
 
@@ -14,4 +14,4 @@ public interface EmployeeService {
 	
 	void deleteById(Integer id);
 	
-}
+}*/
